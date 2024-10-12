@@ -80,12 +80,22 @@ function calculateWeight() {
                 break;
 
             case "Hollow Structural Sections - Square":
-                const [lengthSquare, sideLengthSquare, thicknessSquare] = values;
-                const lengthM = lengthSquare / 1000; // Convert length to meters
-                const sideLengthM = sideLengthSquare / 1000; // Convert side length to meters
-                const thicknessM = thicknessSquare / 1000; // Convert thickness to meters
-                weight = (sideLengthM - thicknessM) * thicknessM * 0.025 * lengthM;
-                break;
+                    const [lengthSquare, sideLengthSquare, thicknessSquare] = values;
+                    const lengthM = lengthSquare / 1000; // Convert length to meters
+                    const sideLengthM = sideLengthSquare / 1000; // Convert side length to meters
+                    const thicknessM = thicknessSquare / 1000; // Convert thickness to meters
+                
+                    // Calculate outer and inner areas
+                    const outerArea = Math.pow(sideLengthM, 2); // Area of the outer square
+                    const innerArea = Math.pow(sideLengthM - 2 * thicknessM, 2); // Area of the inner square
+                
+                    // Volume of the material
+                    const volume = (outerArea - innerArea) * lengthM; 
+                
+                    // Weight calculation (density of steel is approximately 7850 kg/m³)
+                    weight = volume * 7850; 
+                    break;
+                
 
             case "Hollow Structural Sections - Rectangular":
                 const [lengthRect, widthRect, heightRect, thicknessRect] = values;
